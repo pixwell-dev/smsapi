@@ -15,6 +15,7 @@ class SmsapiServiceProvider extends ServiceProvider
         $this->app->when(SmsapiChannel::class)
             ->needs(SmsapiClient::class)
             ->give(function () {
+                
                 $config = config('smsapi');
                 $auth = $config['auth'];
                 if ($auth['method'] === 'token') {
