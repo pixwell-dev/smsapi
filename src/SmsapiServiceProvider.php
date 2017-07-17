@@ -23,7 +23,9 @@ class SmsapiServiceProvider extends ServiceProvider
                     $client = new Client($auth['credentials']['username']);
                     $client->setPasswordHash($auth['credentials']['password']);
                 }
-                $defaults = $config['defaults'] + ['sms' => [], 'mms' => [], 'vms' => []];
+                $defaults = $config['defaults'];// + ['sms' => [], 'mms' => [], 'vms' => []];
+                
+                /*
                 if (! empty($defaults['common'])) {
                     $defaults['common'] = array_only($defaults['common'], [
                         'notify_url', 'partner', 'test',
@@ -43,6 +45,7 @@ class SmsapiServiceProvider extends ServiceProvider
                         return $value !== null;
                     });
                 }, $defaults);
+                */
 
                 return new SmsapiClient($client, $defaults);
             });
