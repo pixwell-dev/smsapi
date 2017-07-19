@@ -38,6 +38,8 @@ class SmsapiChannel
             $message->to($to);
         } elseif ($group = $notifiable->routeNotificationFor('smsapi_group')) {
             $message->group($group);
+        } else {
+            return null
         }
 
         return $this->client->send($message);
