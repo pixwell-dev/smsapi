@@ -39,7 +39,7 @@ class SmsapiChannel
         } elseif ($group = $notifiable->routeNotificationFor('smsapi_group')) {
             $message->group($group);
         } else {
-            return null
+            return null;
         }
 
         return $this->client->send($message);
