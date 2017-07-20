@@ -107,7 +107,12 @@ class SmsapiClient
             $sms->setTest($data['common']['test']);
         }
 
-        return $sms->execute();
+        try {
+            return $sms->execute();
+        } catch(\Exception $e){
+            return null;
+        }
+        
     }
 
     /**
@@ -139,7 +144,11 @@ class SmsapiClient
             $mms->setTest($data['common']['test']);
         }
 
-        return $mms->execute();
+        try {
+            return $mms->execute();
+        } catch(\Exception $e){
+            return null;
+        }
     }
 
     /**
@@ -187,6 +196,10 @@ class SmsapiClient
             $vms->setTest($data['common']['test']);
         }
 
-        return $vms->execute();
+        try {
+            return $vms->execute();
+        } catch(\Exception $e){
+            return null;
+        }
     }
 }
