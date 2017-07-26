@@ -19,6 +19,9 @@ return [
             // 'password' => env('SMSAPI_AUTH_PASSWORD'), // Hashed by MD5
         ],
     ],
+    
+    // https://api.smsapi.pl or https://api.smsapi.com
+    'endpoint' => 'https://api.smsapi.com',
 
     /*
     |--------------------------------------------------------------------------
