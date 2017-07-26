@@ -44,7 +44,9 @@ class SmsapiServiceProvider extends ServiceProvider
                     });
                 }, $defaults);
 
-                return new SmsapiClient($client, $defaults);
+                $proxy = new Native($config['endpoint']);
+
+                return new SmsapiClient($client, $defaults, $proxy);
             });
 
         if ($this->app->runningInConsole()) {
