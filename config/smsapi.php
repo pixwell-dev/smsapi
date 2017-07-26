@@ -22,6 +22,7 @@ return [
     
     // https://api.smsapi.pl or https://api.smsapi.com
     'endpoint' => 'https://api.smsapi.com',
+    'proxy' => \SMSApi\Proxy\Http\Native::class,
 
     /*
     |--------------------------------------------------------------------------
