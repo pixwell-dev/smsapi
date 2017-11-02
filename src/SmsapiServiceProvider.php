@@ -15,6 +15,7 @@ class SmsapiServiceProvider extends ServiceProvider
         $this->app->when(SmsapiChannel::class)
             ->needs(SmsapiClient::class)
             ->give(function () {
+                
                 $config = config('smsapi');
                 $auth = $config['auth'];
                 if ($auth['method'] === 'token') {
@@ -23,7 +24,9 @@ class SmsapiServiceProvider extends ServiceProvider
                     $client = new Client($auth['credentials']['username']);
                     $client->setPasswordHash($auth['credentials']['password']);
                 }
-                $defaults = $config['defaults'] + ['sms' => [], 'mms' => [], 'vms' => []];
+                $defaults = $config['defaults'];// + ['sms' => [], 'mms' => [], 'vms' => []];
+                
+                /*
                 if (! empty($defaults['common'])) {
                     $defaults['common'] = array_only($defaults['common'], [
                         'notify_url', 'partner', 'test',
@@ -43,6 +46,7 @@ class SmsapiServiceProvider extends ServiceProvider
                         return $value !== null;
                     });
                 }, $defaults);
+                */
 
                 $proxyClassName = $config['proxy'];
                 $proxy = new $proxyClassName($config['endpoint']);

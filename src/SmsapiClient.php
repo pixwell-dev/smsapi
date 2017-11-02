@@ -73,41 +73,46 @@ class SmsapiClient
         if (isset($data['group'])) {
             $sms->setGroup($data['group']);
         }
-        if (isset($data['from'])) {
-            $sms->setSender($data['from']);
+        if (isset($data['sms']['from'])) {
+            $sms->setSender($data['sms']['from']);
         }
-        if (isset($data['fast'])) {
-            $sms->setFast($data['fast']);
+        if (isset($data['sms']['fast'])) {
+            $sms->setFast($data['sms']['fast']);
         }
-        if (isset($data['flash'])) {
-            $sms->setFlash($data['flash']);
+        if (isset($data['sms']['flash'])) {
+            $sms->setFlash($data['sms']['flash']);
         }
-        if (isset($data['encoding'])) {
-            $sms->setEncoding($data['encoding']);
+        if (isset($data['sms']['encoding'])) {
+            $sms->setEncoding($data['sms']['encoding']);
         }
-        if (isset($data['normalize'])) {
-            $sms->setNormalize($data['normalize']);
+        if (isset($data['sms']['normalize'])) {
+            $sms->setNormalize($data['sms']['normalize']);
         }
-        if (isset($data['nounicode'])) {
-            $sms->setNoUnicode($data['nounicode']);
+        if (isset($data['sms']['nounicode'])) {
+            $sms->setNoUnicode($data['sms']['nounicode']);
         }
-        if (isset($data['single'])) {
-            $sms->setSingle($data['single']);
+        if (isset($data['sms']['single'])) {
+            $sms->setSingle($data['sms']['single']);
         }
         if (isset($data['date'])) {
             $sms->setDateSent($data['date']);
         }
-        if (isset($data['notify_url'])) {
-            $sms->setNotifyUrl($data['notify_url']);
+        if (isset($data['common']['notify_url'])) {
+            $sms->setNotifyUrl($data['common']['notify_url']);
         }
-        if (isset($data['partner'])) {
-            $sms->setPartner($data['partner']);
+        if (isset($data['common']['partner'])) {
+            $sms->setPartner($data['common']['partner']);
         }
-        if (isset($data['test'])) {
-            $sms->setTest($data['test']);
+        if (isset($data['common']['test'])) {
+            $sms->setTest($data['common']['test']);
         }
 
-        return $sms->execute();
+        try {
+            return $sms->execute();
+        } catch(\Exception $e){
+            return null;
+        }
+        
     }
 
     /**
@@ -129,17 +134,21 @@ class SmsapiClient
         if (isset($data['date'])) {
             $mms->setDateSent($data['date']);
         }
-        if (isset($data['notify_url'])) {
-            $mms->setNotifyUrl($data['notify_url']);
+        if (isset($data['common']['notify_url'])) {
+            $mms->setNotifyUrl($data['common']['notify_url']);
         }
-        if (isset($data['partner'])) {
-            $mms->setPartner($data['partner']);
+        if (isset($data['common']['partner'])) {
+            $mms->setPartner($data['common']['partner']);
         }
-        if (isset($data['test'])) {
-            $mms->setTest($data['test']);
+        if (isset($data['common']['test'])) {
+            $mms->setTest($data['common']['test']);
         }
 
-        return $mms->execute();
+        try {
+            return $mms->execute();
+        } catch(\Exception $e){
+            return null;
+        }
     }
 
     /**
@@ -165,28 +174,32 @@ class SmsapiClient
         if (isset($data['group'])) {
             $vms->setGroup($data['group']);
         }
-        if (isset($data['from'])) {
-            $vms->setFrom($data['from']);
+        if (isset($data['vms']['from'])) {
+            $vms->setFrom($data['vms']['from']);
         }
-        if (isset($data['tries'])) {
-            $vms->setTry($data['tries']);
+        if (isset($data['vms']['tries'])) {
+            $vms->setTry($data['vms']['tries']);
         }
-        if (isset($data['interval'])) {
-            $vms->setInterval($data['interval']);
+        if (isset($data['vms']['interval'])) {
+            $vms->setInterval($data['vms']['interval']);
         }
         if (isset($data['date'])) {
             $vms->setDateSent($data['date']);
         }
-        if (isset($data['notify_url'])) {
-            $vms->setNotifyUrl($data['notify_url']);
+        if (isset($data['common']['notify_url'])) {
+            $vms->setNotifyUrl($data['common']['notify_url']);
         }
-        if (isset($data['partner'])) {
-            $vms->setPartner($data['partner']);
+        if (isset($data['common']['partner'])) {
+            $vms->setPartner($data['common']['partner']);
         }
-        if (isset($data['test'])) {
-            $vms->setTest($data['test']);
+        if (isset($data['common']['test'])) {
+            $vms->setTest($data['common']['test']);
         }
 
-        return $vms->execute();
+        try {
+            return $vms->execute();
+        } catch(\Exception $e){
+            return null;
+        }
     }
 }

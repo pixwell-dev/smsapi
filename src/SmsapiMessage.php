@@ -18,7 +18,7 @@ abstract class SmsapiMessage
      */
     public function to($to)
     {
-        ExceptionFactory::assertArgumentTypes(1, __METHOD__, ['string', 'array'], $to);
+        //ExceptionFactory::assertArgumentTypes(1, __METHOD__, ['string', 'array'], $to);
         $this->data['to'] = $to;
 
         return $this;
