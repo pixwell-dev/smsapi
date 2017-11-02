@@ -55,7 +55,8 @@ class SmsapiClient
 
     /**
      * @param  SmsapiSmsMessage $message
-     * @return Response
+     *
+     * @return \Exception|Response
      */
     public function sendSms(SmsapiSmsMessage $message)
     {
@@ -81,6 +82,9 @@ class SmsapiClient
         }
         if (isset($data['sms']['flash'])) {
             $sms->setFlash($data['sms']['flash']);
+        }
+        if (isset($data['sms']['idx'])) {
+            $sms->setIdx($data['sms']['idx']);
         }
         if (isset($data['sms']['encoding'])) {
             $sms->setEncoding($data['sms']['encoding']);
@@ -110,14 +114,15 @@ class SmsapiClient
         try {
             return $sms->execute();
         } catch(\Exception $e){
-            return null;
+            return $e;
         }
         
     }
 
     /**
      * @param  SmsapiMmsMessage $message
-     * @return Response
+     *
+     * @return \Exception|Response
      */
     public function sendMms(SmsapiMmsMessage $message)
     {
@@ -147,13 +152,14 @@ class SmsapiClient
         try {
             return $mms->execute();
         } catch(\Exception $e){
-            return null;
+            return $e;
         }
     }
 
     /**
      * @param  SmsapiVmsMessage $message
-     * @return Response
+     *
+     * @return \Exception|Response
      */
     public function sendVms(SmsapiVmsMessage $message)
     {
@@ -199,7 +205,7 @@ class SmsapiClient
         try {
             return $vms->execute();
         } catch(\Exception $e){
-            return null;
+            return $e;
         }
     }
 }

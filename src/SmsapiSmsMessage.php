@@ -78,6 +78,18 @@ class SmsapiSmsMessage extends SmsapiMessage
     }
 
     /**
+     * @param  string $idx
+     * @return self
+     */
+    public function idx($idx = null)
+    {
+        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $idx);
+        $this->data['idx'] = $idx;
+
+        return $this;
+    }
+
+    /**
      * @param  string $encoding
      * @return self
      */
