@@ -1,4 +1,4 @@
-# Smsapi notifications channel for Laravel 5.3+
+# Smsapi notifications channel for Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/smsapi.svg)](https://packagist.org/packages/laravel-notification-channels/smsapi)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
@@ -9,7 +9,7 @@
 [![Total Downloads](https://poser.pugx.org/laravel-notification-channels/smsapi/downloads)](https://packagist.org/packages/laravel-notification-channels/smsapi)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/laravel-notification-channels/smsapi/badge.svg)](https://travis-ci.org/laravel-notification-channels/smsapi)
 
-This package makes it easy to send notifications using [Smsapi](https://www.smsapi.pl/) with Laravel 5.3+.
+This package makes it easy to send notifications using [Smsapi](https://www.smsapi.pl/) with Laravel 5.5+, 6.x, & 7.x
 
 ## Contents
 
@@ -31,17 +31,6 @@ You can install the package via composer:
 
 ```bash
 composer require laravel-notification-channels/smsapi
-```
-
-You must install the service provider:
-```php
-// config/app.php
-...
-'providers' => [
-    ...
-    NotificationChannels\Smsapi\SmsapiServiceProvider::class,
-],
-...
 ```
 
 You can also publish the config file with:

@@ -2,85 +2,75 @@
 
 namespace NotificationChannels\Smsapi;
 
-use NotificationChannels\Smsapi\Exceptions\ExceptionFactory;
-
 abstract class SmsapiMessage
 {
     /**
-     * @internal
+     * The message content.
+     *
+     * @var string
+     */
+    public $content;
+
+    /**
+     * @var bool
+     */
+    public $test;
+
+    /**
      * @var array
      */
-    public $data = [];
+    private $filledParams = [];
 
     /**
-     * @param  string|string[] $to
-     * @return self
+     * Create a message object.
+     *
+     * @param string $content
+     *
+     * @return static
      */
-    public function to($to)
+    public static function create(string $content = ''): self
     {
-        //ExceptionFactory::assertArgumentTypes(1, __METHOD__, ['string', 'array'], $to);
-        $this->data['to'] = $to;
+        return new static($content);
+    }
+
+    /**
+     * Create a new message instance.
+     *
+     * @param string $content
+     */
+    public function __construct(string $content = '')
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Set the message content.
+     *
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function content(string $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }
 
-    /**
-     * @param  string $group
-     * @return self
-     */
-    public function group($group)
+    public function fill(array $options): self
     {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $group);
-        $this->data['group'] = $group;
+        foreach ($options as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+                $this->filledParams[] = $key;
+            }
+        }
 
         return $this;
     }
 
-    /**
-     * @param  int|string $date
-     * @return self
-     */
-    public function date($date)
+    public function getFilledParams(): array
     {
-        ExceptionFactory::assertArgumentTypes(1, __METHOD__, ['integer', 'string'], $date);
-        $this->data['date'] = $date;
-
-        return $this;
-    }
-
-    /**
-     * @param  string $notifyUrl
-     * @return self
-     */
-    public function notifyUrl($notifyUrl)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $notifyUrl);
-        $this->data['notify_url'] = $notifyUrl;
-
-        return $this;
-    }
-
-    /**
-     * @param  string $partner
-     * @return self
-     */
-    public function partner($partner)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $partner);
-        $this->data['partner'] = $partner;
-
-        return $this;
-    }
-
-    /**
-     * @param  bool $test
-     * @return self
-     */
-    public function test($test = true)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'boolean', $test);
-        $this->data['test'] = $test;
-
-        return $this;
+        return $this->filledParams;
     }
 }

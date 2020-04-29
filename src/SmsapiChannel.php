@@ -2,46 +2,88 @@
 
 namespace NotificationChannels\Smsapi;
 
-use SMSApi\Api\Response\StatusResponse;
+use Exception;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Notifications\Events\NotificationFailed;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Smsapi\Exceptions\CouldNotSendNotification;
 
 class SmsapiChannel
 {
     /**
-     * @var SmsapiClient
+     * @var Smsapi
      */
-    protected $client;
+    protected $smsapi;
 
     /**
-     * @param SmsapiClient $client
+     * @var Dispatcher
      */
-    public function __construct(SmsapiClient $client)
+    protected $events;
+
+    /**
+     * @param Smsapi $smsapi
+     */
+    public function __construct(Smsapi $smsapi, Dispatcher $events)
     {
-        $this->client = $client;
+        $this->smsapi = $smsapi;
+        $this->events = $events;
     }
 
     /**
      * Send the given notification.
      *
-     * @param  mixed $notifiable
-     * @param  Notification $notification
-     * @return StatusResponse
+     * @param mixed $notifiable
+     * @param Notification $notification
+     *
+     * @return mixed
+     * @throws Exception
      */
     public function send($notifiable, Notification $notification)
     {
-        $message = $notification->toSmsapi($notifiable);
-        if (is_string($message)) {
-            $message = new SmsapiSmsMessage($message);
+        try {
+            $to = $this->getTo($notifiable);
+            $message = $notification->toSmsapi($notifiable);
+
+            if (is_string($message)) {
+                $message = new SmsapiSmsMessage($message);
+            }
+
+            if (!$message instanceof SmsapiMessage) {
+                throw CouldNotSendNotification::invalidMessageObject($message);
+            }
+
+            return $this->smsapi->sendMessage($message, $to);
+        } catch (Exception $exception) {
+            $event = new NotificationFailed(
+                $notifiable,
+                $notification,
+                'smsapi',
+                ['message' => $exception->getMessage(), 'exception' => $exception]
+            );
+
+            $this->events->dispatch($event);
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * Get the address to send a notification to.
+     *
+     * @param mixed $notifiable
+     *
+     * @return mixed
+     * @throws CouldNotSendNotification
+     */
+    protected function getTo($notifiable)
+    {
+        if ($notifiable->routeNotificationFor('smsapi')) {
+            return $notifiable->routeNotificationFor('smsapi');
+        }
+        if (isset($notifiable->phone_number)) {
+            return $notifiable->phone_number;
         }
 
-        if ($to = $notifiable->routeNotificationFor('smsapi')) {
-            $message->to($to);
-        } elseif ($group = $notifiable->routeNotificationFor('smsapi_group')) {
-            $message->group($group);
-        } else {
-            return null;
-        }
-
-        return $this->client->send($message);
+        throw CouldNotSendNotification::invalidReceiver();
     }
 }

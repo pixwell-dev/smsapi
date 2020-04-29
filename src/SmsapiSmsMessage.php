@@ -2,138 +2,87 @@
 
 namespace NotificationChannels\Smsapi;
 
-use NotificationChannels\Smsapi\Exceptions\ExceptionFactory;
+use DateTimeInterface;
 
 class SmsapiSmsMessage extends SmsapiMessage
 {
     /**
-     * @param string|null $content
+     * @var string
      */
-    public function __construct($content = null)
-    {
-        ExceptionFactory::assertArgumentTypes(1, __METHOD__, ['string', 'NULL'], $content);
-        if ($content !== null) {
-            $this->data['content'] = $content;
-        }
-    }
+    public $from;
 
     /**
-     * @param  string $content
-     * @return self
+     * @var string
      */
-    public function content($content)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $content);
-        $this->data['content'] = $content;
-
-        return $this;
-    }
+    public $template;
 
     /**
-     * @param  string $template
-     * @return self
+     * @var string
      */
-    public function template($template)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $template);
-        $this->data['template'] = $template;
-
-        return $this;
-    }
+    public $encoding;
 
     /**
-     * @param  string $from
-     * @return self
+     * @var array
      */
-    public function from($from)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $from);
-        $this->data['from'] = $from;
-
-        return $this;
-    }
+    public $idx;
 
     /**
-     * @param  bool $fast
-     * @return self
+     * @var bool
      */
-    public function fast($fast = true)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'boolean', $fast);
-        $this->data['fast'] = $fast;
-
-        return $this;
-    }
+    public $checkIdx;
 
     /**
-     * @param  bool $flash
-     * @return self
+     * @var string
      */
-    public function flash($flash = true)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'boolean', $flash);
-        $this->data['flash'] = $flash;
-
-        return $this;
-    }
+    public $partnerId;
 
     /**
-     * @param  string $idx
-     * @return self
+     * @var DateTimeInterface
      */
-    public function idx($idx = null)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $idx);
-        $this->data['idx'] = $idx;
-
-        return $this;
-    }
+    public $expirationDate;
 
     /**
-     * @param  string $encoding
-     * @return self
+     * @var bool
      */
-    public function encoding($encoding)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'string', $encoding);
-        $this->data['encoding'] = $encoding;
-
-        return $this;
-    }
+    public $single;
 
     /**
-     * @param  bool $normalize
-     * @return self
+     * @var bool
      */
-    public function normalize($normalize = true)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'boolean', $normalize);
-        $this->data['normalize'] = $normalize;
-
-        return $this;
-    }
+    public $noUnicode;
 
     /**
-     * @param  bool $nounicode
-     * @return self
+     * @var bool
      */
-    public function nounicode($nounicode = true)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'boolean', $nounicode);
-        $this->data['nounicode'] = $nounicode;
-
-        return $this;
-    }
+    public $normalize;
 
     /**
-     * @param  bool $single
-     * @return self
+     * @var string
      */
-    public function single($single = true)
-    {
-        ExceptionFactory::assertArgumentType(1, __METHOD__, 'boolean', $single);
-        $this->data['single'] = $single;
+    public $notifyUrl;
 
-        return $this;
-    }
+    /**
+     * @var bool
+     */
+    public $fast;
+
+    /**
+     * @var string
+     */
+    public $param1;
+
+    /**
+     * @var string
+     */
+    public $param2;
+
+    /**
+     * @var string
+     */
+    public $param3;
+
+    /**
+     * @var string
+     */
+    public $param4;
 }
